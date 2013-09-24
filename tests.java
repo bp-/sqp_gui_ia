@@ -1,6 +1,4 @@
-import moteur.SauveQuiPuce;
-import moteur.Carte;
-import moteur.Couleur;
+import moteur.*;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -25,7 +23,6 @@ public class tests {
 		});*/
 		
 		Carte maCarte = new Carte(20, Couleur.BLEU_NUIT);
-		
 		System.out.println("maCarte a pour couleur: " + maCarte.getCouleur());
 
 	}
