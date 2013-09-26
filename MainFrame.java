@@ -1,35 +1,34 @@
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 
 public class MainFrame extends JFrame {
-	public MainFrame(String title) {
-		super(title);
+	
+	public MainFrame() {
+		this.setTitle("Sauve Qui Puce GUI");
+		this.setVisible(true);
+		this.setSize(800, 600);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// Set the layout manager
 		setLayout(new BorderLayout());
 		
 		// Create components
-		final JTextArea textArea = new JTextArea();
-		JButton button = new JButton("My button");
+		JButton button = new JButton("Click me !");
 		
 		// Add components to the content pane
 		Container c = getContentPane();
-		c.add(textArea, BorderLayout.CENTER);
 		c.add(button, BorderLayout.SOUTH);
 		
-		// Events
+		// Handle events
 		button.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent a) {
-				textArea.append("OK! \n");
+				// action onclick
 			}
 		});
 		
