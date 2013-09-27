@@ -30,7 +30,8 @@ public class MainFrame extends JFrame {
 		panelMiddle = new JPanel();
 		panelBottom = new JPanel(); panelBottom.setPreferredSize(new Dimension(800, 100));
 		
-		panelMiddle.setLayout(new GridLayout(2, 5));
+		panelMiddle.setLayout(new GridLayout(0, 6));
+		//panelMiddle.setLayout(new BoxLayout(panelMiddle, BoxLayout.LINE_AXIS));
 		
 		this.getContentPane().add(panelTop, BorderLayout.NORTH);
 		this.getContentPane().add(panelMiddle, BorderLayout.CENTER);
