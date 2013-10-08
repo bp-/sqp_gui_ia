@@ -11,6 +11,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	private GUI_Carte uneCarte;
 	private JPanel panelTop, panelMiddle, panelBottom;
+	private JButton bouton1;
+	private JButton bouton2;
 	
 	public MainFrame() {
 		// General
@@ -42,8 +44,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		panelMiddle.setBackground( new Color(0, 0, 0, 0) );
 		panelBottom.setBackground(new Color(0, 0, 0, 0));
 		
-		JButton bouton = new JButton("Cliquez ici !");
-		bouton.addActionListener(this);
+	    bouton1 = new JButton("Tirer une carte");
+		bouton1.addActionListener(this);
+		
+		bouton2 = new JButton("reset");
+		bouton2.addActionListener(this);
 		
 		// Add component
 		panelMiddle.add(new GUI_Carte( new Carte(1, Couleur.BLEU_NUIT) ));
@@ -51,19 +56,30 @@ public class MainFrame extends JFrame implements ActionListener {
 		panelMiddle.add(new GUI_Carte( new Carte(3, Couleur.VERT) ));
 		panelMiddle.add(new GUI_Carte( new Carte(7, Couleur.VIOLET) ));
 		
-		panelTop.add(bouton);
+		panelTop.add(bouton1);
+		panelTop.add(bouton2);
 		
 		// Display
 		this.setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		panelMiddle.removeAll();
-		panelMiddle.add(new GUI_Carte( new Carte(10, Couleur.BLEU_NUIT) ));
 		
-		getContentPane().validate();
-		repaint();
-		System.out.println("Clic !");
+		if (e.getSource()==bouton1){
+			panelMiddle.add(new GUI_Carte( new Carte(10, Couleur.BLEU_NUIT) ));
+			
+			getContentPane().validate();
+			repaint();
+			System.out.println("Clic !");
+		}else{
+			panelMiddle.removeAll();
+			//panelMiddle.add(new GUI_Carte( new Carte(10, Couleur.BLEU_NUIT) ));
+			
+			getContentPane().validate();
+			repaint();
+			System.out.println("Clic !");
+		}
+	
 	}
 	
 	public void update() {
