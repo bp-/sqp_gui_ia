@@ -11,7 +11,7 @@ public class Panel extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		try {
-			Image img = ImageIO.read(new File("/Users/bruno/Eclipse/workspace/SQP_GUI/src/background.png"));
+			Image img = ImageIO.read(new File("./background.png"));
 			g.drawImage(img, 0, 0, this);
 		} catch (IOException e) {
 			e.printStackTrace();
