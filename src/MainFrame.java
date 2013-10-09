@@ -8,44 +8,79 @@ import moteur.Carte;
 import moteur.Couleur;
 
 public class MainFrame extends JFrame implements ActionListener {
-	
-	private GUI_Carte uneCarte;
+		
 	private JPanel panelTop, panelMiddle, panelBottom;
 	private JButton bouton1;
 	private JButton bouton2;
 	
-	private Joueur[] joueurs;
+	private SauveQuiPuce game;
 	
 	public MainFrame() {
+		init_frame();
+		init_panels();
+		init_components();
+		this.setVisible(true);
+	}
+	
+	public void setGame(SauveQuiPuce pGame) {
+		game = pGame;
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getSource() == bouton1){
+			panelMiddle.add(new GUI_Carte( new Carte(10, Couleur.BLEU_NUIT) ));
+			
+			getContentPane().validate();
+			repaint();
+			System.out.println("Clic !");
+		} else {
+			panelMiddle.removeAll();			
+			getContentPane().validate();
+			repaint();
+			System.out.println("Clic !");
+		}
+	
+	}
+	
+	private void init_frame() {
 		// General
 		this.setTitle("Sauve Qui Puce GUI");
 		this.setSize(800, 600);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
 		//this.setResizable(false);
 		
 		// Content Pane
 		Panel panel = new Panel();
 		this.setContentPane(panel);
-		
+				
 		// Define layout manager
 		this.setLayout(new BorderLayout());
-		
+	}
+	
+	private void init_panels() {
 		// Add 3 panels
-		panelTop = new JPanel(); panelTop.setPreferredSize(new Dimension(800, 100));
+		panelTop = new JPanel();
+		panelTop.setPreferredSize(new Dimension(800, 100));
+				
 		panelMiddle = new JPanel();
-		panelBottom = new JPanel(); panelBottom.setPreferredSize(new Dimension(800, 100));
-		
 		panelMiddle.setLayout(new GridLayout(0, 10));
-		
+				
+		panelBottom = new JPanel();
+		panelBottom.setPreferredSize(new Dimension(800, 100));
+					
 		this.getContentPane().add(panelTop, BorderLayout.NORTH);
 		this.getContentPane().add(panelMiddle, BorderLayout.CENTER);
 		this.getContentPane().add(panelBottom, BorderLayout.SOUTH);
-		
+				
 		panelTop.setBackground(new Color(0, 0, 0, 0));
 		panelMiddle.setBackground( new Color(0, 0, 0, 0) );
 		panelBottom.setBackground(new Color(0, 0, 0, 0));
-		
+				
+	}
+	
+	private void init_components() {
 	    bouton1 = new JButton("Tirer une carte");
 		bouton1.addActionListener(this);
 		
@@ -60,33 +95,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		panelTop.add(bouton1);
 		panelTop.add(bouton2);
-		
-		// Display
-		this.setVisible(true);
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getSource()==bouton1){
-			panelMiddle.add(new GUI_Carte( new Carte(10, Couleur.BLEU_NUIT) ));
-			
-			getContentPane().validate();
-			repaint();
-			System.out.println("Clic !");
-		}else{
-			panelMiddle.removeAll();
-			//panelMiddle.add(new GUI_Carte( new Carte(10, Couleur.BLEU_NUIT) ));
-			
-			getContentPane().validate();
-			repaint();
-			System.out.println("Clic !");
-		}
-	
-	}
-	
-	public void displayCurrentPlayer() {
-		//
-	}
+/*	private void displayRow() {
+		Carte[] row = 
+	}*/
 	
 	public void update() {
 		// Things to do:

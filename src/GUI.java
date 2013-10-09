@@ -1,4 +1,5 @@
 import moteur.*;
+
 import javax.swing.*;
 
 public class GUI implements IHM {
@@ -6,6 +7,10 @@ public class GUI implements IHM {
 	
 	public GUI() {
 		window = new MainFrame();
+	}
+	
+	public void setGame(SauveQuiPuce pGame) {
+		window.game = pGame;
 	}
 
 	@Override

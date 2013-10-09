@@ -6,12 +6,12 @@ public class main {
 		
 		GUI myGUI = new GUI();
 		SauveQuiPuce game = new SauveQuiPuce(myGUI, 10, 10);
-		
+
 		// create and add players
-		Joueur player1 = new Joueur();
+		Joueur player1 = new Joueur(game);
 		game.addJoueur(player1);
 		
-		Joueur player2 = new Joueur();
+		Joueur player2 = new Joueur(game);
 		game.addJoueur(player2);
 		
 		game.commencerPartie();
