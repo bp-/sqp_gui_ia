@@ -1,4 +1,6 @@
 import moteur.*;
+import java.math.*;
+
 
 
 
@@ -8,7 +10,8 @@ public class Joueur {
 	
 	public Coup prochainCoup(Coup[] coupsPossibles){
 		
-		return coupsPossibles[0];
+		
+		return coupsPossibles[(int)(Math.random() * (coupsPossibles.length+1)) ];
 	}
 	
 
