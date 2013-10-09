@@ -11,6 +11,9 @@ public class main {
 		Joueur player1 = new Joueur();
 		game.addJoueur(player1);
 		
+		Joueur player2 = new Joueur();
+		game.addJoueur(player2);
+		
 		game.commencerPartie();
 
 	}
