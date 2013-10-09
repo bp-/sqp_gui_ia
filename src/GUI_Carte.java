@@ -20,10 +20,10 @@ public class GUI_Carte extends JComponent {
 		//g.drawString("Carte: " + carte.getValeur() + " " + carte.getCouleur().toString(), 10, 10);
 		
 		g.setColor(Color.BLACK);
-		g.drawRoundRect(10, 10, 100, 150, 20, 20);
+		g.drawRoundRect(10, 10, 67, 100, 20, 20);
 		
 		g.setColor(Color.WHITE);
-		g.fillRoundRect(10, 10, 100, 150, 20, 20);
+		g.fillRoundRect(10, 10, 67, 100, 20, 20);
 		
 		g.setColor(Color.BLACK);
 		g.drawString("" + carte.getValeur(), 50, 75);
