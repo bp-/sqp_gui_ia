@@ -4,7 +4,7 @@ import java.math.*;
 
 
 
-public class Joueur {
+public class Joueur implements moteur.Joueur {
 	
 	private Carte[] mainDuJoueur;
 	
