@@ -4,8 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import moteur.Carte;
-import moteur.Couleur;
+import moteur.*;
 
 public class MainFrame extends JFrame implements ActionListener {
 		
@@ -13,17 +12,13 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JButton bouton1;
 	private JButton bouton2;
 	
-	private SauveQuiPuce game;
+	public SauveQuiPuce game;
 	
 	public MainFrame() {
 		init_frame();
 		init_panels();
 		init_components();
 		this.setVisible(true);
-	}
-	
-	public void setGame(SauveQuiPuce pGame) {
-		game = pGame;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
