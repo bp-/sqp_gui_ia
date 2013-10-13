@@ -1,41 +1,42 @@
+import java.util.ArrayList;
+
 import moteur.*;
-import java.math.*;
-import moteur.SauveQuiPuce;
 
 public class Joueur implements moteur.Joueur {
 	
-	public static int nbreJoueurs = 0;
+	private static GUI gui;
 	
-	private Carte[] mainDuJoueur;
-	public int numeroJoueur;
-	private SauveQuiPuce moteur;
+	private ArrayList<Carte> mainDuJoueur = new ArrayList<Carte>();
 	
-	public Joueur(SauveQuiPuce pmoteur){
-		
-		this.moteur=pmoteur;
+	public Joueur(GUI pGui){
+		gui = pGui;
 	}
 	
-	public Coup prochainCoup(Coup[] coupsPossibles){
-		System.out.println("w00t");
-		return coupsPossibles[(int)(Math.random() * (coupsPossibles.length+1)) ];
-	}
-   
-	private Carte[] nouvelleMain(Carte[] mainDuJoeur){
-		
-		
-		Carte[] carte2= new Carte[mainDuJoueur.length+1];
-	    Coup coup=moteur.getDernierCoup(numeroJoueur);
-		
-		if (moteur.getDernierCoup(numeroJoueur) instanceof Prendre){
-			
-			Prendre temp= (Prendre) coup;
-			
-			
-			
-			carte2[carte2.length+1]=temp.getCarte();
-			
+	public Coup prochainCoup(Coup[] coupsPossibles){		
+		try {
+			Thread.currentThread();
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		return carte2;
+				
+		double choix = Math.random()*coupsPossibles.length;
+		Coup decision = coupsPossibles[(int )choix];
+		
+		if (decision instanceof Prendre) {
+			mainDuJoueur.add(((Prendre) decision).getCarte());
+		}
+		
+		gui.playerTracking();
+		
+		System.out.println(decision.getClass());
+
+		return decision;
 	}
+	
+	public Carte[] getMainDuJoueur() {
+		return (Carte[]) mainDuJoueur.toArray(new Carte[mainDuJoueur.size()]);
+	}
+		
 
 }

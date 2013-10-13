@@ -1,18 +1,22 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 import moteur.*;
 
 public class MainFrame extends JFrame implements ActionListener {
-		
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel panelTop, panelMiddle, panelBottom;
 	private JButton bouton1;
 	private JButton bouton2;
 	
 	public SauveQuiPuce game;
+	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
+	public int currentPlayer = 0;
 	
 	public MainFrame() {
 		init_frame();
@@ -63,7 +67,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		panelMiddle.setLayout(new GridLayout(0, 10));
 				
 		panelBottom = new JPanel();
-		panelBottom.setPreferredSize(new Dimension(800, 100));
+		panelBottom.setPreferredSize(new Dimension(800, 150));
+		panelBottom.setLayout(new GridLayout(0, 10));
 					
 		this.getContentPane().add(panelTop, BorderLayout.NORTH);
 		this.getContentPane().add(panelMiddle, BorderLayout.CENTER);
@@ -91,13 +96,36 @@ public class MainFrame extends JFrame implements ActionListener {
 		panelTop.add(bouton1);
 		panelTop.add(bouton2);
 	}
-	
-/*	private void displayRow() {
-		Carte[] row = 
-	}*/
-	
+		
 	public void update() {
-		// Things to do:
-		//	- 
+	// Called by the game engine
+		displayRow();
+		displayCurrentPlayer();
+		
+		getContentPane().validate();
+		repaint();
+	}
+	
+	private void displayRow() {
+		panelMiddle.removeAll();
+		
+		Carte[] row = game.getCartesRetournees();
+		
+		for (int i=0; i<row.length; i++) {
+			panelMiddle.add(new GUI_Carte( row[i] ));
+		}
+	
+	}
+
+	private void displayCurrentPlayer() {
+		System.out.println("Joueur courant: " + currentPlayer);
+		
+		Carte[] cartes = joueurs.get(currentPlayer).getMainDuJoueur();
+		panelBottom.removeAll();
+		
+		for (int i=0; i < cartes.length; i++) {
+			panelBottom.add(new GUI_Carte( cartes[i] ));
+		}
+		
 	}
 }
