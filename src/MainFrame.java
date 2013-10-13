@@ -13,10 +13,12 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JPanel panelTop, panelMiddle, panelBottom;
 	private JButton bouton1;
 	private JButton bouton2;
+	private JLabel labelStackState;
+	private JLabel labelCurrentPlayer;
 	
 	public SauveQuiPuce game;
-	public ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
-	public int currentPlayer = 0;
+	public ArrayList<Joueur> players = new ArrayList<Joueur>();
+	public int currentPlayerId = 0;
 	
 	public MainFrame() {
 		init_frame();
@@ -45,10 +47,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	private void init_frame() {
 		// General
 		this.setTitle("Sauve Qui Puce GUI");
-		this.setSize(800, 600);
+		this.setSize(1280, 800);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
-		//this.setResizable(false);
+		this.setResizable(false);
 		
 		// Content Pane
 		Panel panel = new Panel();
@@ -61,13 +63,13 @@ public class MainFrame extends JFrame implements ActionListener {
 	private void init_panels() {
 		// Add 3 panels
 		panelTop = new JPanel();
-		panelTop.setPreferredSize(new Dimension(800, 100));
+		panelTop.setPreferredSize(new Dimension(1280, 100));
 				
 		panelMiddle = new JPanel();
 		panelMiddle.setLayout(new GridLayout(0, 10));
 				
 		panelBottom = new JPanel();
-		panelBottom.setPreferredSize(new Dimension(800, 150));
+		panelBottom.setPreferredSize(new Dimension(1280, 200));
 		panelBottom.setLayout(new GridLayout(0, 10));
 					
 		this.getContentPane().add(panelTop, BorderLayout.NORTH);
@@ -87,12 +89,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		bouton2 = new JButton("reset");
 		bouton2.addActionListener(this);
 		
-		// Add component
-		panelMiddle.add(new GUI_Carte( new Carte(1, Couleur.BLEU_NUIT) ));
-		panelMiddle.add(new GUI_Carte( new Carte(3, Couleur.JAUNE) ));
-		panelMiddle.add(new GUI_Carte( new Carte(3, Couleur.VERT) ));
-		panelMiddle.add(new GUI_Carte( new Carte(7, Couleur.VIOLET) ));
+		labelStackState = new JLabel("Cartes restantes: XX");
+		labelCurrentPlayer = new JLabel("Joueur courant num XX");
 		
+		panelTop.add(labelStackState);
+		panelTop.add(labelCurrentPlayer);
 		panelTop.add(bouton1);
 		panelTop.add(bouton2);
 	}
@@ -101,6 +102,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	// Called by the game engine
 		displayRow();
 		displayCurrentPlayer();
+		updateInfos();
 		
 		getContentPane().validate();
 		repaint();
@@ -118,9 +120,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	private void displayCurrentPlayer() {
-		System.out.println("Joueur courant: " + currentPlayer);
+		System.out.println("Joueur courant: " + currentPlayerId);
 		
-		Carte[] cartes = joueurs.get(currentPlayer).getMainDuJoueur();
+		Carte[] cartes = players.get(currentPlayerId).getPlayerHand();
 		panelBottom.removeAll();
 		
 		for (int i=0; i < cartes.length; i++) {
@@ -128,4 +130,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		
 	}
+
+	private void updateInfos() {
+		labelStackState.setText("Cartes restantes: " + game.taillePioche());
+		labelCurrentPlayer.setText("Joueur courant numero " + currentPlayerId);
+	}
+
 }

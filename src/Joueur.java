@@ -6,7 +6,7 @@ public class Joueur implements moteur.Joueur {
 	
 	private static GUI gui;
 	
-	private ArrayList<Carte> mainDuJoueur = new ArrayList<Carte>();
+	private ArrayList<Carte> playerHand = new ArrayList<Carte>();
 	
 	public Joueur(GUI pGui){
 		gui = pGui;
@@ -15,7 +15,7 @@ public class Joueur implements moteur.Joueur {
 	public Coup prochainCoup(Coup[] coupsPossibles){		
 		try {
 			Thread.currentThread();
-			Thread.sleep(2000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -24,18 +24,20 @@ public class Joueur implements moteur.Joueur {
 		Coup decision = coupsPossibles[(int )choix];
 		
 		if (decision instanceof Prendre) {
-			mainDuJoueur.add(((Prendre) decision).getCarte());
+			playerHand.add(((Prendre) decision).getCarte());
+		}
+		else if (decision instanceof Triplette) {
+			// pops out3 cards from player's hand
+			// and display them
 		}
 		
-		gui.playerTracking();
-		
-		System.out.println(decision.getClass());
+		gui.playerTracking(); // increment cur player number
 
 		return decision;
 	}
 	
-	public Carte[] getMainDuJoueur() {
-		return (Carte[]) mainDuJoueur.toArray(new Carte[mainDuJoueur.size()]);
+	public Carte[] getPlayerHand() {
+		return (Carte[]) playerHand.toArray(new Carte[playerHand.size()]);
 	}
 		
 

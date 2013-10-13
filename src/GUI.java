@@ -1,31 +1,31 @@
 import moteur.*;
 
 public class GUI implements IHM {
-	MainFrame window;
+	MainFrame mainFrame;
 	
 	public GUI() {
-		window = new MainFrame();
+		mainFrame = new MainFrame();
 	}
 	
 	public void setGame(SauveQuiPuce pGame) {
-		window.game = pGame;
+		mainFrame.game = pGame;
 	}
 	
-	public void addJoueur(Joueur pJoueur) {
-		window.joueurs.add(pJoueur);
+	public void addPlayer(Joueur pJoueur) {
+		mainFrame.players.add(pJoueur);
 	}
 	
 	
 	public void playerTracking() {
-		window.currentPlayer++;
-		if (window.currentPlayer > window.game.nbJoueurs()-1) {
-			window.currentPlayer = 0;
+		mainFrame.currentPlayerId++;
+		if (mainFrame.currentPlayerId > mainFrame.game.nbJoueurs()-1) {
+			mainFrame.currentPlayerId = 0;
 		}
 	}
 
 	@Override
 	public void afficherJeu(SauveQuiPuce arg0) {
-		window.update();
+		mainFrame.update();
 	}
 
 }

@@ -21,6 +21,7 @@ public class GUI_Carte extends JComponent {
 		
 		g.setColor(Color.BLACK);
 		g.drawRoundRect(10, 10, 67, 100, 20, 20);
+		//drawRoundRect(x, y, width, height, arcWidth, arcHeight);
 		
 		g.setColor(Color.WHITE);
 		g.fillRoundRect(10, 10, 67, 100, 20, 20);
