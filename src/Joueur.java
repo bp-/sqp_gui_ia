@@ -7,12 +7,17 @@ public class Joueur implements moteur.Joueur {
 	private static GUI gui;
 	
 	private ArrayList<Carte> playerHand = new ArrayList<Carte>();
+	private Coup nxtAction;
 	
 	public Joueur(GUI pGui){
 		gui = pGui;
 	}
 	
-	public Coup prochainCoup(Coup[] coupsPossibles){		
+	public Coup prochainCoup(Coup[] coupsPossibles){
+		
+		// send possible actions to GUI
+		// todo
+		
 		try {
 			Thread.currentThread();
 			Thread.sleep(500);
@@ -44,6 +49,5 @@ public class Joueur implements moteur.Joueur {
 	public Carte[] getPlayerHand() {
 		return (Carte[]) playerHand.toArray(new Carte[playerHand.size()]);
 	}
-		
 
 }

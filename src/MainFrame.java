@@ -11,10 +11,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel panelInfos, panelCardsRow, panelPlayerHand, panelSpecial;
-	private JButton bouton1;
 	private JButton bouton2;
 	private JLabel labelStackState;
 	private JLabel labelCurrentPlayer;
+	private JButton buttonTakeCard;
 	
 	public SauveQuiPuce game;
 	public ArrayList<Joueur> players = new ArrayList<Joueur>();
@@ -29,12 +29,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == bouton1){
-			panelCardsRow.add(new GUI_Carte( new Carte(10, Couleur.BLEU_NUIT) ));
-			
-			getContentPane().validate();
-			repaint();
-			System.out.println("Clic !");
+		if (e.getSource() == buttonTakeCard){
+			//players.get(currentPlayerId).
+
 		} else {
 			panelCardsRow.removeAll();			
 			getContentPane().validate();
@@ -88,8 +85,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	private void init_components() {
-	    bouton1 = new JButton("Tirer une carte");
-		bouton1.addActionListener(this);
+		buttonTakeCard = new JButton("Tirer une carte");
+		buttonTakeCard.addActionListener(this);
 		
 		bouton2 = new JButton("reset");
 		bouton2.addActionListener(this);
@@ -99,7 +96,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		panelInfos.add(labelStackState);
 		panelInfos.add(labelCurrentPlayer);
-		panelInfos.add(bouton1);
+		panelInfos.add(buttonTakeCard);
 		panelInfos.add(bouton2);
 	}
 		
