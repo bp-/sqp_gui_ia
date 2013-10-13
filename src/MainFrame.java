@@ -10,7 +10,7 @@ import moteur.*;
 public class MainFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
-	private JPanel panelTop, panelMiddle, panelBottom;
+	private JPanel panelInfos, panelCardsRow, panelPlayerHand, panelSpecial;
 	private JButton bouton1;
 	private JButton bouton2;
 	private JLabel labelStackState;
@@ -30,13 +30,13 @@ public class MainFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == bouton1){
-			panelMiddle.add(new GUI_Carte( new Carte(10, Couleur.BLEU_NUIT) ));
+			panelCardsRow.add(new GUI_Carte( new Carte(10, Couleur.BLEU_NUIT) ));
 			
 			getContentPane().validate();
 			repaint();
 			System.out.println("Clic !");
 		} else {
-			panelMiddle.removeAll();			
+			panelCardsRow.removeAll();			
 			getContentPane().validate();
 			repaint();
 			System.out.println("Clic !");
@@ -47,7 +47,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private void init_frame() {
 		// General
 		this.setTitle("Sauve Qui Puce GUI");
-		this.setSize(1280, 800);
+		this.setSize(1000, 800);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
 		this.setResizable(false);
@@ -57,29 +57,34 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.setContentPane(panel);
 				
 		// Define layout manager
-		this.setLayout(new BorderLayout());
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 	}
 	
 	private void init_panels() {
 		// Add 3 panels
-		panelTop = new JPanel();
-		panelTop.setPreferredSize(new Dimension(1280, 100));
+		panelInfos = new JPanel();
 				
-		panelMiddle = new JPanel();
-		panelMiddle.setLayout(new GridLayout(0, 10));
+		panelCardsRow = new JPanel();
+		panelCardsRow.setLayout(new GridLayout(0, 10));
+		panelCardsRow.setPreferredSize(new Dimension(0, 300));
 				
-		panelBottom = new JPanel();
-		panelBottom.setPreferredSize(new Dimension(1280, 200));
-		panelBottom.setLayout(new GridLayout(0, 10));
+		panelPlayerHand = new JPanel();
+		panelPlayerHand.setPreferredSize(new Dimension(0, 300));
+		panelPlayerHand.setLayout(new GridLayout(0, 10));
+		
+		panelSpecial = new JPanel();
+		panelSpecial.setPreferredSize(new Dimension(0, 160));
+		panelSpecial.setLayout(new GridLayout(0, 10));
 					
-		this.getContentPane().add(panelTop, BorderLayout.NORTH);
-		this.getContentPane().add(panelMiddle, BorderLayout.CENTER);
-		this.getContentPane().add(panelBottom, BorderLayout.SOUTH);
+		this.getContentPane().add(panelInfos);
+		this.getContentPane().add(panelCardsRow);
+		this.getContentPane().add(panelSpecial);
+		this.getContentPane().add(panelPlayerHand);
 				
-		panelTop.setBackground(new Color(0, 0, 0, 0));
-		panelMiddle.setBackground( new Color(0, 0, 0, 0) );
-		panelBottom.setBackground(new Color(0, 0, 0, 0));
-				
+		panelInfos.setBackground(new Color(20, 20, 0, 100));
+		panelCardsRow.setBackground( new Color(20, 40, 0, 100) );
+		panelPlayerHand.setBackground(new Color(30, 10, 0, 100));
+		panelSpecial.setBackground(new Color (10, 70, 0, 100));	
 	}
 	
 	private void init_components() {
@@ -92,10 +97,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		labelStackState = new JLabel("Cartes restantes: XX");
 		labelCurrentPlayer = new JLabel("Joueur courant num XX");
 		
-		panelTop.add(labelStackState);
-		panelTop.add(labelCurrentPlayer);
-		panelTop.add(bouton1);
-		panelTop.add(bouton2);
+		panelInfos.add(labelStackState);
+		panelInfos.add(labelCurrentPlayer);
+		panelInfos.add(bouton1);
+		panelInfos.add(bouton2);
 	}
 		
 	public void update() {
@@ -109,31 +114,39 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	private void displayRow() {
-		panelMiddle.removeAll();
+	// Displays the current row.
+		panelCardsRow.removeAll();
 		
-		Carte[] row = game.getCartesRetournees();
+		Carte[] cards = game.getCartesRetournees();
 		
-		for (int i=0; i<row.length; i++) {
-			panelMiddle.add(new GUI_Carte( row[i] ));
+		for (int i=0; i<cards.length; i++) {
+			panelCardsRow.add(new GUI_Carte( cards[i] ));
 		}
 	
 	}
 
 	private void displayCurrentPlayer() {
-		System.out.println("Joueur courant: " + currentPlayerId);
+	// Displays the current player's hand.
+		Carte[] cards = players.get(currentPlayerId).getPlayerHand();
+		panelPlayerHand.removeAll();
 		
-		Carte[] cartes = players.get(currentPlayerId).getPlayerHand();
-		panelBottom.removeAll();
-		
-		for (int i=0; i < cartes.length; i++) {
-			panelBottom.add(new GUI_Carte( cartes[i] ));
+		for (int i=0; i < cards.length; i++) {
+			panelPlayerHand.add(new GUI_Carte( cards[i] ));
 		}
 		
 	}
 
 	private void updateInfos() {
+	// Various informations about the current game
 		labelStackState.setText("Cartes restantes: " + game.taillePioche());
 		labelCurrentPlayer.setText("Joueur courant numero " + currentPlayerId);
 	}
 
+	public void displayTripletteGala(Carte[] cards) {
+		panelSpecial.removeAll();
+		
+		for (int i=0; i < cards.length; i++) {
+			panelSpecial.add(new GUI_Carte( cards[i] ));
+		}
+	}
 }
