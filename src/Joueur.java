@@ -26,15 +26,13 @@ public class Joueur implements moteur.Joueur {
 		if (decision instanceof Prendre) {
 			playerHand.add(((Prendre) decision).getCarte());
 		}
-		else if (decision instanceof Triplette || decision instanceof Gala) {
-			// pops out cards from player's hand
-			System.out.println("Triplette/Gala !");
-			
+		else if (decision instanceof Triplette) {
 			Carte cards[] = ((Triplette) decision).getCartes();
+			
 			for (int i=0; i<cards.length; i++) {
 				playerHand.remove(cards[i]);
 			}
-			// and display them (todo)
+			
 			gui.displayTripletteGala(cards);
 		}
 		
