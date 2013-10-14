@@ -11,14 +11,15 @@ public class MainFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel panelInfos, panelCardsRow, panelPlayerHand, panelSpecial;
-	private JButton bouton2;
 	private JLabel labelStackState;
 	private JLabel labelCurrentPlayer;
-	private JButton buttonTakeCard;
+	private JComboBox selectAction;
+	private JButton buttonValidate;
 	
 	public SauveQuiPuce game;
 	public ArrayList<Joueur> players = new ArrayList<Joueur>();
 	public int currentPlayerId = 0;
+	
 	
 	public MainFrame() {
 		init_frame();
@@ -29,15 +30,11 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == buttonTakeCard){
-			//players.get(currentPlayerId).
-
-		} else {
-			panelCardsRow.removeAll();			
-			getContentPane().validate();
-			repaint();
-			System.out.println("Clic !");
+		if (e.getSource() == buttonValidate) {
+			players.get(currentPlayerId).setAction( selectAction.getSelectedIndex() );
 		}
+		
+		this.update();
 	
 	}
 	
@@ -85,19 +82,18 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	private void init_components() {
-		buttonTakeCard = new JButton("Tirer une carte");
-		buttonTakeCard.addActionListener(this);
+		selectAction = new JComboBox();
 		
-		bouton2 = new JButton("reset");
-		bouton2.addActionListener(this);
+		buttonValidate = new JButton("Valider");
+		buttonValidate.addActionListener(this);
 		
 		labelStackState = new JLabel("Cartes restantes: XX");
 		labelCurrentPlayer = new JLabel("Joueur courant num XX");
 		
 		panelInfos.add(labelStackState);
 		panelInfos.add(labelCurrentPlayer);
-		panelInfos.add(buttonTakeCard);
-		panelInfos.add(bouton2);
+		panelInfos.add(selectAction);
+		panelInfos.add(buttonValidate);
 	}
 		
 	public void update() {
@@ -146,4 +142,27 @@ public class MainFrame extends JFrame implements ActionListener {
 			panelSpecial.add(new GUI_Carte( cards[i] ));
 		}
 	}
+
+	public void updatePossibleActions(Coup[] coupsPossibles) {
+		this.selectAction.removeAllItems();
+		
+		System.out.println(coupsPossibles.length);
+		
+		for (int i=0; i<coupsPossibles.length; i++) {
+			
+			if ( coupsPossibles[i] instanceof Retourner ) {
+				this.selectAction.addItem("Retourner une carte");
+			}
+			else if ( coupsPossibles[i] instanceof Prendre ) {
+				this.selectAction.addItem("Prendre " + ((Prendre )coupsPossibles[i]).getCarte().toString() );
+			}
+			else {
+				this.selectAction.addItem( coupsPossibles[i].getClass().toString() );
+			}
+			
+		}
+		
+		this.update();
+	}
+
 }

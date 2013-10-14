@@ -15,15 +15,17 @@ public class GUI implements IHM {
 		mainFrame.players.add(pJoueur);
 	}
 	
-	public void playerTracking() {
-		mainFrame.currentPlayerId++;
-		if (mainFrame.currentPlayerId > mainFrame.game.nbJoueurs()-1) {
-			mainFrame.currentPlayerId = 0;
-		}
+	public void playerTracking(int id) {
+		mainFrame.currentPlayerId = id;
+		mainFrame.update();
 	}
 	
 	public void displayTripletteGala(Carte[] cards) {
 		mainFrame.displayTripletteGala(cards);
+	}
+	
+	public void updatePossibleActions(Coup[] coupsPossibles) {
+		mainFrame.updatePossibleActions(coupsPossibles);
 	}
 
 	@Override

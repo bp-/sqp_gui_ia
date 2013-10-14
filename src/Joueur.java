@@ -5,29 +5,40 @@ import moteur.*;
 public class Joueur implements moteur.Joueur {
 	
 	private static GUI gui;
+	private static int playerCnt = 0;
 	
+	private int playerId;
 	private ArrayList<Carte> playerHand = new ArrayList<Carte>();
-	private Coup nxtAction;
+	private int decisionIdx;
 	
 	public Joueur(GUI pGui){
 		gui = pGui;
+		this.playerId = playerCnt;
+		playerCnt++;
 	}
 	
 	public Coup prochainCoup(Coup[] coupsPossibles){
 		
-		// send possible actions to GUI
-		// todo
+		this.decisionIdx = -1;
+		gui.playerTracking(this.playerId);
 		
-		try {
-			Thread.currentThread();
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		// request action from GUI
+		gui.updatePossibleActions(coupsPossibles);		
+		
+		while (this.decisionIdx < 0) {
+			// wait
+			try {
+				Thread.currentThread().sleep(250);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-				
-		double choix = Math.random()*coupsPossibles.length;
-		Coup decision = coupsPossibles[(int )choix];
 		
+		Coup decision = coupsPossibles[this.decisionIdx];
+		System.out.println("OK !");
+
+		// Process decision
 		if (decision instanceof Prendre) {
 			playerHand.add(((Prendre) decision).getCarte());
 		}
@@ -41,13 +52,15 @@ public class Joueur implements moteur.Joueur {
 			gui.displayTripletteGala(cards);
 		}
 		
-		gui.playerTracking(); // increment cur player number
-
 		return decision;
 	}
 	
 	public Carte[] getPlayerHand() {
 		return (Carte[]) playerHand.toArray(new Carte[playerHand.size()]);
+	}
+	
+	public void setAction(int pDecisionIdx) {
+		this.decisionIdx = pDecisionIdx;
 	}
 
 }
