@@ -1,9 +1,10 @@
+import java.util.ArrayList;
+
 import moteur.*;
-import java.math.*;
-import moteur.SauveQuiPuce;
 
 public class Joueur implements moteur.Joueur {
 	
+
 	public static int nbreJoueurs = 0;
 	
 	private Carte[] mainDuJoueur;
@@ -17,38 +18,70 @@ public class Joueur implements moteur.Joueur {
 	
 
 	private int numDuJoueur;
+
+	private static GUI gui;
+	private static int playerCnt = 0;
 	
-	public Joueur() {
-		nbreJoueurs++;
+	private int playerId;
+	private ArrayList<Carte> playerHand = new ArrayList<Carte>();
+	private int decisionIdx;
+
+	
+	public Joueur(GUI pGui){
+		gui = pGui;
+		this.playerId = playerCnt;
+		playerCnt++;
 	}
 
 	
+	
+   
+
 	public Coup prochainCoup(Coup[] coupsPossibles){
 
 		
-
+		this.decisionIdx = -1;
+		gui.playerTracking(this.playerId);
 		
+		// request action from GUI
+		gui.updatePossibleActions(coupsPossibles);		
 		
-		return coupsPossibles[(int)(Math.random() * (coupsPossibles.length+1)) ];
-
-	}
-   
-	private Carte[] nouvelleMain(Carte[] mainDuJoeur){
-		
-		
-		Carte[] carte2= new Carte[mainDuJoueur.length+1];
-	    Coup coup=moteur.getDernierCoup(numeroJoueur);
-		
-		if (moteur.getDernierCoup(numeroJoueur) instanceof Prendre){
-			
-			Prendre temp= (Prendre) coup;
-			
-			
-			
-			carte2[carte2.length+1]=temp.getCarte();
-			
+		while (this.decisionIdx < 0) {
+			// wait
+			try {
+				Thread.currentThread().sleep(250);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		return carte2;
+		
+		Coup decision = coupsPossibles[this.decisionIdx];
+		System.out.println("OK !");
+
+		// Process decision
+		if (decision instanceof Prendre) {
+			playerHand.add(((Prendre) decision).getCarte());
+		}
+		else if (decision instanceof Triplette) {
+			Carte cards[] = ((Triplette) decision).getCartes();
+			
+			for (int i=0; i<cards.length; i++) {
+				playerHand.remove(cards[i]);
+			}
+			
+			gui.displayTripletteGala(cards);
+		}
+		
+		return decision;
+	}
+	
+	public Carte[] getPlayerHand() {
+		return (Carte[]) playerHand.toArray(new Carte[playerHand.size()]);
+	}
+	
+	public void setAction(int pDecisionIdx) {
+		this.decisionIdx = pDecisionIdx;
 	}
 
 }

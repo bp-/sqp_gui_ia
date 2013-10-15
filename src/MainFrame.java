@@ -1,19 +1,25 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
-import moteur.Carte;
-import moteur.Couleur;
+import moteur.*;
 
 public class MainFrame extends JFrame implements ActionListener {
-		
-	private JPanel panelTop, panelMiddle, panelBottom;
-	private JButton bouton1;
-	private JButton bouton2;
+	private static final long serialVersionUID = 1L;
 	
-	private SauveQuiPuce game;
+	private JPanel panelInfos, panelCardsRow, panelPlayerHand, panelSpecial;
+	private JLabel labelStackState;
+	private JLabel labelCurrentPlayer;
+	private JComboBox selectAction;
+	private JButton buttonValidate;
+	
+	public SauveQuiPuce game;
+	public ArrayList<Joueur> players = new ArrayList<Joueur>();
+	public int currentPlayerId = 0;
+	
 	
 	public MainFrame() {
 		init_frame();
@@ -22,87 +28,141 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
-	public void setGame(SauveQuiPuce pGame) {
-		game = pGame;
-	}
-	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == bouton1){
-			panelMiddle.add(new GUI_Carte( new Carte(10, Couleur.BLEU_NUIT) ));
-			
-			getContentPane().validate();
-			repaint();
-			System.out.println("Clic !");
-		} else {
-			panelMiddle.removeAll();			
-			getContentPane().validate();
-			repaint();
-			System.out.println("Clic !");
+		if (e.getSource() == buttonValidate) {
+			players.get(currentPlayerId).setAction( selectAction.getSelectedIndex() );
 		}
+		
+		this.update();
 	
 	}
 	
 	private void init_frame() {
 		// General
 		this.setTitle("Sauve Qui Puce GUI");
-		this.setSize(800, 600);
+		this.setSize(1000, 800);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
-		//this.setResizable(false);
+		this.setResizable(false);
 		
 		// Content Pane
 		Panel panel = new Panel();
 		this.setContentPane(panel);
 				
 		// Define layout manager
-		this.setLayout(new BorderLayout());
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 	}
 	
 	private void init_panels() {
 		// Add 3 panels
-		panelTop = new JPanel();
-		panelTop.setPreferredSize(new Dimension(800, 100));
+		panelInfos = new JPanel();
 				
-		panelMiddle = new JPanel();
-		panelMiddle.setLayout(new GridLayout(0, 10));
+		panelCardsRow = new JPanel();
+		panelCardsRow.setLayout(new GridLayout(0, 10));
+		panelCardsRow.setPreferredSize(new Dimension(0, 300));
 				
-		panelBottom = new JPanel();
-		panelBottom.setPreferredSize(new Dimension(800, 100));
+		panelPlayerHand = new JPanel();
+		panelPlayerHand.setPreferredSize(new Dimension(0, 300));
+		panelPlayerHand.setLayout(new GridLayout(0, 10));
+		
+		panelSpecial = new JPanel();
+		panelSpecial.setPreferredSize(new Dimension(0, 160));
+		panelSpecial.setLayout(new GridLayout(0, 10));
 					
-		this.getContentPane().add(panelTop, BorderLayout.NORTH);
-		this.getContentPane().add(panelMiddle, BorderLayout.CENTER);
-		this.getContentPane().add(panelBottom, BorderLayout.SOUTH);
+		this.getContentPane().add(panelInfos);
+		this.getContentPane().add(panelCardsRow);
+		this.getContentPane().add(panelSpecial);
+		this.getContentPane().add(panelPlayerHand);
 				
-		panelTop.setBackground(new Color(0, 0, 0, 0));
-		panelMiddle.setBackground( new Color(0, 0, 0, 0) );
-		panelBottom.setBackground(new Color(0, 0, 0, 0));
-				
+		panelInfos.setBackground(new Color(20, 20, 0, 100));
+		panelCardsRow.setBackground( new Color(20, 40, 0, 100) );
+		panelPlayerHand.setBackground(new Color(30, 10, 0, 100));
+		panelSpecial.setBackground(new Color (10, 70, 0, 100));	
 	}
 	
 	private void init_components() {
-	    bouton1 = new JButton("Tirer une carte");
-		bouton1.addActionListener(this);
+		selectAction = new JComboBox();
 		
-		bouton2 = new JButton("reset");
-		bouton2.addActionListener(this);
+		buttonValidate = new JButton("Valider");
+		buttonValidate.addActionListener(this);
 		
-		// Add component
-		panelMiddle.add(new GUI_Carte( new Carte(1, Couleur.BLEU_NUIT) ));
-		panelMiddle.add(new GUI_Carte( new Carte(3, Couleur.JAUNE) ));
-		panelMiddle.add(new GUI_Carte( new Carte(3, Couleur.VERT) ));
-		panelMiddle.add(new GUI_Carte( new Carte(7, Couleur.VIOLET) ));
+		labelStackState = new JLabel("Cartes restantes: XX");
+		labelCurrentPlayer = new JLabel("Joueur courant num XX");
 		
-		panelTop.add(bouton1);
-		panelTop.add(bouton2);
+		panelInfos.add(labelStackState);
+		panelInfos.add(labelCurrentPlayer);
+		panelInfos.add(selectAction);
+		panelInfos.add(buttonValidate);
 	}
-	
-/*	private void displayRow() {
-		Carte[] row = 
-	}*/
-	
+		
 	public void update() {
-		// Things to do:
-		//	- 
+	// Called by the game engine
+		displayRow();
+		displayCurrentPlayer();
+		updateInfos();
+		
+		getContentPane().validate();
+		repaint();
 	}
+	
+	private void displayRow() {
+	// Displays the current row.
+		panelCardsRow.removeAll();
+		
+		Carte[] cards = game.getCartesRetournees();
+		
+		for (int i=0; i<cards.length; i++) {
+			panelCardsRow.add(new GUI_Carte( cards[i] ));
+		}
+	
+	}
+
+	private void displayCurrentPlayer() {
+	// Displays the current player's hand.
+		Carte[] cards = players.get(currentPlayerId).getPlayerHand();
+		panelPlayerHand.removeAll();
+		
+		for (int i=0; i < cards.length; i++) {
+			panelPlayerHand.add(new GUI_Carte( cards[i] ));
+		}
+		
+	}
+
+	private void updateInfos() {
+	// Various informations about the current game
+		labelStackState.setText("Cartes restantes: " + game.taillePioche());
+		labelCurrentPlayer.setText("Joueur courant numero " + currentPlayerId);
+	}
+
+	public void displayTripletteGala(Carte[] cards) {
+		panelSpecial.removeAll();
+		
+		for (int i=0; i < cards.length; i++) {
+			panelSpecial.add(new GUI_Carte( cards[i] ));
+		}
+	}
+
+	public void updatePossibleActions(Coup[] coupsPossibles) {
+		this.selectAction.removeAllItems();
+		
+		System.out.println(coupsPossibles.length);
+		
+		for (int i=0; i<coupsPossibles.length; i++) {
+			
+			if ( coupsPossibles[i] instanceof Retourner ) {
+				this.selectAction.addItem("Retourner une carte");
+			}
+			else if ( coupsPossibles[i] instanceof Prendre ) {
+				this.selectAction.addItem("Prendre " + ((Prendre )coupsPossibles[i]).getCarte().toString() );
+			}
+			else {
+				this.selectAction.addItem( coupsPossibles[i].getClass().toString() );
+			}
+			
+		}
+		
+		this.update();
+	}
+
 }

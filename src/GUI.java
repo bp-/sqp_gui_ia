@@ -1,21 +1,36 @@
 import moteur.*;
 
-import javax.swing.*;
-
 public class GUI implements IHM {
-	MainFrame window;
+	MainFrame mainFrame;
 	
 	public GUI() {
-		window = new MainFrame();
+		mainFrame = new MainFrame();
 	}
 	
 	public void setGame(SauveQuiPuce pGame) {
-		window.game = pGame;
+		mainFrame.game = pGame;
+	}
+	
+	public void addPlayer(Joueur pJoueur) {
+		mainFrame.players.add(pJoueur);
+	}
+	
+	public void playerTracking(int id) {
+		mainFrame.currentPlayerId = id;
+		mainFrame.update();
+	}
+	
+	public void displayTripletteGala(Carte[] cards) {
+		mainFrame.displayTripletteGala(cards);
+	}
+	
+	public void updatePossibleActions(Coup[] coupsPossibles) {
+		mainFrame.updatePossibleActions(coupsPossibles);
 	}
 
 	@Override
 	public void afficherJeu(SauveQuiPuce arg0) {
-		window.update();
+		mainFrame.update();
 	}
 
 }
