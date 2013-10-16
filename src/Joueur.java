@@ -4,21 +4,40 @@ import moteur.*;
 
 public class Joueur implements moteur.Joueur {
 	
+
+	public static int nbreJoueurs = 0;
+	
+	private Carte[] mainDuJoueur;
+	public int numeroJoueur;
+	private SauveQuiPuce moteur;
+	
+	public Joueur(SauveQuiPuce pmoteur){
+		
+		this.moteur=pmoteur;
+	}
+	
+
+	private int numDuJoueur;
+
 	private static GUI gui;
 	private static int playerCnt = 0;
 	
 	private int playerId;
 	private ArrayList<Carte> playerHand = new ArrayList<Carte>();
 	private int decisionIdx;
+
 	
 	public Joueur(GUI pGui){
 		gui = pGui;
 		this.playerId = playerCnt;
 		playerCnt++;
 	}
-	
-	public Coup prochainCoup(Coup[] coupsPossibles){
 
+	
+	
+   
+
+	public Coup prochainCoup(Coup[] coupsPossibles){
 		this.decisionIdx = -1;
 		gui.playerTracking(this.playerId);
 		
