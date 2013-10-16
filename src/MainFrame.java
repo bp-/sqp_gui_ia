@@ -146,8 +146,6 @@ public class MainFrame extends JFrame implements ActionListener {
 	public void updatePossibleActions(Coup[] coupsPossibles) {
 		this.selectAction.removeAllItems();
 		
-		System.out.println(coupsPossibles.length);
-		
 		for (int i=0; i<coupsPossibles.length; i++) {
 			
 			if ( coupsPossibles[i] instanceof Retourner ) {

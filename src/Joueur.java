@@ -18,7 +18,7 @@ public class Joueur implements moteur.Joueur {
 	}
 	
 	public Coup prochainCoup(Coup[] coupsPossibles){
-		
+
 		this.decisionIdx = -1;
 		gui.playerTracking(this.playerId);
 		
@@ -36,7 +36,6 @@ public class Joueur implements moteur.Joueur {
 		}
 		
 		Coup decision = coupsPossibles[this.decisionIdx];
-		System.out.println("OK !");
 
 		// Process decision
 		if (decision instanceof Prendre) {
@@ -50,6 +49,9 @@ public class Joueur implements moteur.Joueur {
 			}
 			
 			gui.displayTripletteGala(cards);
+		}
+		else if (decision instanceof Gala) {
+			// FIN !
 		}
 		
 		return decision;
