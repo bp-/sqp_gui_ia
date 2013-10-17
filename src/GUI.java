@@ -20,8 +20,8 @@ public class GUI implements IHM {
 		mainFrame.update();
 	}
 	
-	public void displayTripletteGala(Carte[] cards) {
-		mainFrame.displayTripletteGala(cards);
+	public void displayTriplette(Carte[] cards) {
+		mainFrame.displayTriplette(cards);
 	}
 	
 	public void updatePossibleActions(Coup[] coupsPossibles) {

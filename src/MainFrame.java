@@ -135,7 +135,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		labelCurrentPlayer.setText("Joueur courant numero " + currentPlayerId);
 	}
 
-	public void displayTripletteGala(Carte[] cards) {
+	public void displayTriplette(Carte[] cards) {
 		panelSpecial.removeAll();
 		
 		for (int i=0; i < cards.length; i++) {

@@ -67,7 +67,7 @@ public class Joueur implements moteur.Joueur {
 				playerHand.remove(cards[i]);
 			}
 			
-			gui.displayTripletteGala(cards);
+			gui.displayTriplette(cards);
 		}
 		else if (decision instanceof Gala) {
 			// FIN !
