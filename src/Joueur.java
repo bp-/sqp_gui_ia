@@ -4,19 +4,6 @@ import moteur.*;
 
 public class Joueur implements moteur.Joueur {
 	
-
-	public static int nbreJoueurs = 0;
-	
-	private Carte[] mainDuJoueur;
-	public int numeroJoueur;
-	private SauveQuiPuce moteur;
-	
-	public Joueur(SauveQuiPuce pmoteur){
-		
-		this.moteur=pmoteur;
-	}
-	
-
 	private int numDuJoueur;
 
 	private static GUI gui;
@@ -33,9 +20,6 @@ public class Joueur implements moteur.Joueur {
 		playerCnt++;
 	}
 
-	
-	
-   
 
 	public Coup prochainCoup(Coup[] coupsPossibles){
 		this.decisionIdx = -1;
