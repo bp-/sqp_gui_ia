@@ -3,8 +3,6 @@ import java.util.ArrayList;
 import moteur.*;
 
 public class Joueur implements moteur.Joueur {
-	
-	private int numDuJoueur;
 
 	private static GUI gui;
 	private static int playerCnt = 0;
