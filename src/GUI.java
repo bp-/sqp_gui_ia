@@ -32,5 +32,8 @@ public class GUI implements IHM {
 	public void afficherJeu(SauveQuiPuce arg0) {
 		mainFrame.update();
 	}
-
+	
+	public SauveQuiPuce getGame(){
+		return mainFrame.getGame();
+	}
 }

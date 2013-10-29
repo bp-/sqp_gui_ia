@@ -162,5 +162,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		this.update();
 	}
+	
+	public SauveQuiPuce getGame(){
+		return game;
+	}
 
 }

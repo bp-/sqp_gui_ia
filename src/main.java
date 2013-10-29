@@ -13,7 +13,7 @@ public class main {
 		game.addJoueur(player1);
 		myGUI.addPlayer(player1);
 		
-		Joueur player2 = new Joueur(myGUI);
+		Joueur player2 = new IA(myGUI);
 		game.addJoueur(player2);
 		myGUI.addPlayer(player2);
 		
