@@ -37,8 +37,10 @@ public class IA extends Joueur {
 			return tmp; 
 		}
 		
-		System.out.println("Retourner");
-		return coupsPossibles[0];  //retourner une carte
+		System.out.println("Taille main IA: " + this.playerHand.size() );
+	
+		this.playerHand.add(((Prendre) coupsPossibles[1]).getCarte());
+		return coupsPossibles[1];  //retourner une carte
 		
 	}
 		

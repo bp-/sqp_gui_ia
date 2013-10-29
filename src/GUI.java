@@ -27,13 +27,20 @@ public class GUI implements IHM {
 	public void updatePossibleActions(Coup[] coupsPossibles) {
 		mainFrame.updatePossibleActions(coupsPossibles);
 	}
+	
+	public SauveQuiPuce getGame(){
+		return mainFrame.getGame();
+	}
 
 	@Override
 	public void afficherJeu(SauveQuiPuce arg0) {
 		mainFrame.update();
 	}
-	
-	public SauveQuiPuce getGame(){
-		return mainFrame.getGame();
+
+	@Override
+	public void afficherScoreFinal(ScoreJoueur[] arg0) {
+		// TODO Auto-generated method stub
+		
 	}
+
 }
