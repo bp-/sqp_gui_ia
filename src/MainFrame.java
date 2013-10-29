@@ -91,9 +91,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		labelCurrentPlayer = new JLabel("Joueur courant num XX");
 		
 		panelInfos.add(labelStackState);
-		panelInfos.add(labelCurrentPlayer);
 		panelInfos.add(selectAction);
 		panelInfos.add(buttonValidate);
+		panelInfos.add(labelCurrentPlayer);
 	}
 		
 	public void update() {

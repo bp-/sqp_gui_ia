@@ -5,10 +5,6 @@ import moteur.*;
 
 public class IA extends Joueur {
 	
-	private static GUI gui;
-	private int playerId;
-	private ArrayList<Carte> playerHand = new ArrayList<Carte>();
-	
 	public IA(GUI pGui) {
 		super(pGui);
 	}
@@ -41,6 +37,7 @@ public class IA extends Joueur {
 			return tmp; 
 		}
 		
+		System.out.println("Retourner");
 		return coupsPossibles[0];  //retourner une carte
 		
 	}

@@ -4,11 +4,11 @@ import moteur.*;
 
 public class Joueur implements moteur.Joueur {
 
-	private static GUI gui;
+	protected static GUI gui;
 	private static int playerCnt = 0;
 	
-	private int playerId;
-	private ArrayList<Carte> playerHand = new ArrayList<Carte>();
+	protected int playerId;
+	protected ArrayList<Carte> playerHand = new ArrayList<Carte>();
 	private int decisionIdx;
 
 	
