@@ -10,21 +10,33 @@ import moteur.*;
 public class MainFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
+	Panel panelGame = new Panel();
+	Panel panelInit = new Panel();
+	
+	private JPanel content = new JPanel();
+	private CardLayout contentLayout = new CardLayout();
+	
 	private JPanel panelInfos, panelCardsRow, panelPlayerHand, panelSpecial;
 	private JLabel labelStackState;
 	private JLabel labelCurrentPlayer;
 	private JComboBox selectAction;
 	private JButton buttonValidate;
+	private JButton btn;
 	
 	public SauveQuiPuce game;
+	public boolean startGame = false;
 	public ArrayList<Joueur> players = new ArrayList<Joueur>();
 	public int currentPlayerId = 0;
 	
 	
 	public MainFrame() {
 		init_frame();
-		init_panels();
-		init_components();
+		
+		init_panelInit_content();
+		
+		init_panelGame_panels();
+		init_panelGame_components();
+		
 		this.setVisible(true);
 	}
 	
@@ -33,28 +45,49 @@ public class MainFrame extends JFrame implements ActionListener {
 		if (e.getSource() == buttonValidate) {
 			players.get(currentPlayerId).setAction( selectAction.getSelectedIndex() );
 		}
+		else if (e.getSource() == btn) {
+			startGame = true;
+			contentLayout.next(content);
+		}
 		
 		this.update();
 	
 	}
 	
+	/*
+	 * Initialisation methods
+	 */
+	public SauveQuiPuce getGame(){
+		return game;
+	}
+	
 	private void init_frame() {
 		// General
-		this.setTitle("Sauve Qui Puce GUI");
+		this.setTitle("Sauve Qui Puce GUI - BETA");
 		this.setSize(1000, 800);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);				
 		this.setResizable(false);
+				
+		// Define layout managers
+		panelGame.setLayout(new BoxLayout(panelGame, BoxLayout.PAGE_AXIS));
+		content.setLayout(contentLayout);
+		
+		content.add(panelGame);
+		content.add(panelInit);
 		
 		// Content Pane
-		Panel panel = new Panel();
-		this.setContentPane(panel);
-				
-		// Define layout manager
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		//this.setContentPane(content);
+		this.getContentPane().add(content, BorderLayout.CENTER);
 	}
 	
-	private void init_panels() {
+	private void init_panelInit_content() {	
+		btn = new JButton("Start game !");
+		panelInit.add(btn);
+		btn.addActionListener(this);
+	}
+	
+	private void init_panelGame_panels() {
 		// Add 3 panels
 		panelInfos = new JPanel();
 				
@@ -70,10 +103,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		panelSpecial.setPreferredSize(new Dimension(0, 160));
 		panelSpecial.setLayout(new GridLayout(0, 10));
 					
-		this.getContentPane().add(panelInfos);
-		this.getContentPane().add(panelCardsRow);
-		this.getContentPane().add(panelSpecial);
-		this.getContentPane().add(panelPlayerHand);
+		panelGame.add(panelInfos);
+		panelGame.add(panelCardsRow);
+		panelGame.add(panelSpecial);
+		panelGame.add(panelPlayerHand);
 				
 		panelInfos.setBackground(new Color(20, 20, 0, 100));
 		panelCardsRow.setBackground( new Color(20, 40, 0, 100) );
@@ -81,7 +114,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		panelSpecial.setBackground(new Color (10, 70, 0, 100));	
 	}
 	
-	private void init_components() {
+	private void init_panelGame_components() {
 		selectAction = new JComboBox();
 		
 		buttonValidate = new JButton("Valider");
@@ -95,14 +128,17 @@ public class MainFrame extends JFrame implements ActionListener {
 		panelInfos.add(buttonValidate);
 		panelInfos.add(labelCurrentPlayer);
 	}
-		
+	
+	/*
+	 * Display refresh methods
+	 */
 	public void update() {
 	// Called by the game engine
 		displayRow();
 		displayCurrentPlayer();
 		updateInfos();
 		
-		getContentPane().validate();
+		this.getContentPane().validate();
 		repaint();
 	}
 	
@@ -161,10 +197,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		
 		this.update();
-	}
-	
-	public SauveQuiPuce getGame(){
-		return game;
 	}
 
 }

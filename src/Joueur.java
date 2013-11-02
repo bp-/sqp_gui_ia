@@ -28,12 +28,8 @@ public class Joueur implements moteur.Joueur {
 		
 		while (this.decisionIdx < 0) {
 			// wait
-			try {
-				Thread.currentThread().sleep(250);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			try { Thread.currentThread().sleep(250); }
+			catch (InterruptedException e) { e.printStackTrace(); }
 		}
 		
 		Coup decision = coupsPossibles[this.decisionIdx];

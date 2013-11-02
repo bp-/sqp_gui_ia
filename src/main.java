@@ -17,6 +17,11 @@ public class main {
 		game.addJoueur(player2);
 		myGUI.addPlayer(player2);
 		
+		while ( !myGUI.isGameReady() ) {
+			try { Thread.currentThread().sleep(250); }
+			catch (InterruptedException e) { e.printStackTrace(); }
+		}
+		
 		game.commencerPartie();
 
 	}
