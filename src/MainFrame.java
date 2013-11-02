@@ -24,7 +24,6 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JButton btn;
 	
 	public SauveQuiPuce game;
-	public boolean startGame = false;
 	public ArrayList<Joueur> players = new ArrayList<Joueur>();
 	public int currentPlayerId = 0;
 	
@@ -46,7 +45,6 @@ public class MainFrame extends JFrame implements ActionListener {
 			players.get(currentPlayerId).setAction( selectAction.getSelectedIndex() );
 		}
 		else if (e.getSource() == btn) {
-			startGame = true;
 			contentLayout.next(content);
 		}
 		

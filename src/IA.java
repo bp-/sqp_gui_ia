@@ -13,12 +13,8 @@ public class IA extends Joueur {
 		gui.playerTracking(this.playerId);
 		Coup tmp=null;
 		
-		try {
-			Thread.currentThread().sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		try { Thread.currentThread().sleep(2000); }
+		catch (InterruptedException e) { e.printStackTrace(); }
 		
 		tmp=verifGala(coupsPossibles);
 		if(tmp!=null){

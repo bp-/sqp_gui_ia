@@ -32,10 +32,6 @@ public class GUI implements IHM {
 		return mainFrame.getGame();
 	}
 	
-	public boolean isGameReady() {
-		return mainFrame.startGame;
-	}
-
 	@Override
 	public void afficherJeu(SauveQuiPuce arg0) {
 		mainFrame.update();
