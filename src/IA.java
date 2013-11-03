@@ -2,9 +2,8 @@ import java.util.ArrayList;
 
 import moteur.*;
 
-
 public class IA extends Joueur {
-	
+		
 	public IA(GUI pGui) {
 		super(pGui);
 	}
@@ -13,31 +12,33 @@ public class IA extends Joueur {
 		gui.playerTracking(this.playerId);
 		Coup tmp=null;
 		
-		try { Thread.currentThread().sleep(2000); }
-		catch (InterruptedException e) { e.printStackTrace(); }
+		//try { Thread.currentThread().sleep(2000); }
+		//catch (InterruptedException e) { e.printStackTrace(); }
 		
+		// Cas trivial
+		if (coupsPossibles.length == 1) {
+			return coupsPossibles[0];
+		}
+		
+		// Si Gala possible, le jouer
 		tmp=verifGala(coupsPossibles);
-		if(tmp!=null){
-			return tmp; 
-		}
+		if(tmp!=null){ return tmp; }
 		
-		
+		// Sinon, si Triplette possible, la jouer
 		tmp=verifTriplette(coupsPossibles);
-		if(tmp!=null){
-			return tmp; 
-		}
+		if(tmp!=null){ return tmp; }
 		
-		
+		// Sinon, si future Triplette possible, prendre la bonne carte
 		tmp=possibleTriplette(coupsPossibles);
-		if(tmp!=null){
-			return tmp; 
+		if(tmp!=null){ return tmp; }
+		
+		// Il reste deux actions par defaut: Prendre ou Retourner
+		if (Math.random() < 0.5) {
+			double cnt = Math.random()*(coupsPossibles.length-1) ;
+			return coupsPossibles[1 + (int)cnt]; // Prendre une carte au hasard
 		}
 		
-		System.out.println("Taille main IA: " + this.playerHand.size() );
-	
-		this.playerHand.add(((Prendre) coupsPossibles[1]).getCarte());
-		return coupsPossibles[1];  //retourner une carte
-		
+		return coupsPossibles[0]; // Retourner
 	}
 		
 	// Verifie si Gala possible

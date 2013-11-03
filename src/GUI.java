@@ -32,15 +32,15 @@ public class GUI implements IHM {
 		return mainFrame.getGame();
 	}
 	
+	
 	@Override
 	public void afficherJeu(SauveQuiPuce arg0) {
 		mainFrame.update();
 	}
 
 	@Override
-	public void afficherScoreFinal(ScoreJoueur[] arg0) {
-		// TODO Auto-generated method stub
-		
+	public void afficherScoreFinal(ScoreJoueur[] scores) {
+		mainFrame.displayScore(scores);
 	}
 
 }

@@ -9,7 +9,7 @@ public class main {
 		myGUI.setGame(game);
 
 		// create and add players
-		Joueur player1 = new Joueur(myGUI);
+		Joueur player1 = new IA(myGUI);
 		game.addJoueur(player1);
 		myGUI.addPlayer(player1);
 		

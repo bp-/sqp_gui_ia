@@ -11,7 +11,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	Panel panelGame = new Panel();
-	Panel panelInit = new Panel();
+	Panel panelScores = new Panel();
 	
 	private JPanel content = new JPanel();
 	private CardLayout contentLayout = new CardLayout();
@@ -29,13 +29,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	
 	public MainFrame() {
-		init_frame();
-		
-		init_panelInit_content();
-		
+		init_frame();		
 		init_panelGame_panels();
 		init_panelGame_components();
-		
 		this.setVisible(true);
 	}
 	
@@ -43,9 +39,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		if (e.getSource() == buttonValidate) {
 			players.get(currentPlayerId).setAction( selectAction.getSelectedIndex() );
-		}
-		else if (e.getSource() == btn) {
-			contentLayout.next(content);
 		}
 		
 		this.update();
@@ -69,21 +62,16 @@ public class MainFrame extends JFrame implements ActionListener {
 				
 		// Define layout managers
 		panelGame.setLayout(new BoxLayout(panelGame, BoxLayout.PAGE_AXIS));
-		content.setLayout(contentLayout);
+		panelScores.setLayout(new GridLayout(0,1));
 		
+		content.setLayout(contentLayout);
 		content.add(panelGame);
-		content.add(panelInit);
+		content.add(panelScores);
 		
 		// Content Pane
-		//this.setContentPane(content);
 		this.getContentPane().add(content, BorderLayout.CENTER);
 	}
 	
-	private void init_panelInit_content() {	
-		btn = new JButton("Start game !");
-		panelInit.add(btn);
-		btn.addActionListener(this);
-	}
 	
 	private void init_panelGame_panels() {
 		// Add 3 panels
@@ -197,4 +185,28 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.update();
 	}
 
+	/* 
+	 * End of game methods
+	 */
+	public void displayScore(ScoreJoueur[] scores) {
+		
+		String[] header = {"Player", "Final Score", "Triplettes", "Gala"};
+		Object[][] data = new Object[10][4];
+		
+		for (Joueur j : players) {
+			data[j.playerId][0] = j.playerId;
+			data[j.playerId][1] = scores[j.playerId].getScoreFinal();
+			data[j.playerId][2] = scores[j.playerId].getNbTriplette();
+			data[j.playerId][3] = ( scores[j.playerId].getGala() ) ? "Yes" : "No";
+		}
+		
+		JTable scoresTab = new JTable(data, header);
+		
+		JScrollPane scoresTabCont = new JScrollPane(scoresTab);
+		scoresTab.setPreferredSize( new Dimension(400, 600) );
+
+		panelScores.add(scoresTabCont);
+
+		contentLayout.next(content);
+	}
 }
