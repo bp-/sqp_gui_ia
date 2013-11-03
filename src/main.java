@@ -17,6 +17,10 @@ public class main {
 		game.addJoueur(player2);
 		myGUI.addPlayer(player2);
 		
+		Joueur player3 = new IA(myGUI);
+		game.addJoueur(player3);
+		myGUI.addPlayer(player3);
+		
 		game.commencerPartie();
 
 	}

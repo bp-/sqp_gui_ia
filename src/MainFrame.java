@@ -148,13 +148,13 @@ public class MainFrame extends JFrame implements ActionListener {
 		for (int i=0; i < cards.length; i++) {
 			panelPlayerHand.add(new GUI_Carte( cards[i] ));
 		}
-		
+
 	}
 
 	private void updateInfos() {
 	// Various informations about the current game
 		labelStackState.setText("Cartes restantes: " + game.taillePioche());
-		labelCurrentPlayer.setText("Joueur courant numero " + currentPlayerId);
+		labelCurrentPlayer.setText("Joueur courant numero " + (1+currentPlayerId));
 	}
 
 	public void displayTriplette(Carte[] cards) {
@@ -191,7 +191,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	public void displayScore(ScoreJoueur[] scores) {
 		
 		String[] header = {"Player", "Final Score", "Triplettes", "Gala"};
-		Object[][] data = new Object[10][4];
+		Object[][] data = new Object[game.nbJoueurs()][4];
 		
 		for (Joueur j : players) {
 			data[j.playerId][0] = j.playerId;

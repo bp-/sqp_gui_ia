@@ -12,30 +12,34 @@ public class IA extends Joueur {
 		gui.playerTracking(this.playerId);
 		Coup tmp=null;
 		
-		//try { Thread.currentThread().sleep(2000); }
-		//catch (InterruptedException e) { e.printStackTrace(); }
+		try { Thread.currentThread().sleep(1000); }
+		catch (InterruptedException e) { e.printStackTrace(); }
 		
 		// Cas trivial
 		if (coupsPossibles.length == 1) {
-			return coupsPossibles[0];
+			return coupsPossibles[0]; // Retourner
 		}
 		
 		// Si Gala possible, le jouer
 		tmp=verifGala(coupsPossibles);
-		if(tmp!=null){ return tmp; }
+		if(tmp!=null){ updatePlayerHand(tmp); return tmp; }
 		
 		// Sinon, si Triplette possible, la jouer
 		tmp=verifTriplette(coupsPossibles);
-		if(tmp!=null){ return tmp; }
+		if(tmp!=null){ updatePlayerHand(tmp); return tmp; }
 		
 		// Sinon, si future Triplette possible, prendre la bonne carte
 		tmp=possibleTriplette(coupsPossibles);
-		if(tmp!=null){ return tmp; }
+		if(tmp!=null){ updatePlayerHand(tmp); return tmp; }
 		
 		// Il reste deux actions par defaut: Prendre ou Retourner
 		if (Math.random() < 0.5) {
 			double cnt = Math.random()*(coupsPossibles.length-1) ;
-			return coupsPossibles[1 + (int)cnt]; // Prendre une carte au hasard
+			
+			Coup decision = coupsPossibles[1 + (int)cnt];
+			updatePlayerHand(decision);
+			
+			return decision; // Prendre une carte au hasard
 		}
 		
 		return coupsPossibles[0]; // Retourner

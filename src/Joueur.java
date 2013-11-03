@@ -35,21 +35,7 @@ public class Joueur implements moteur.Joueur {
 		Coup decision = coupsPossibles[this.decisionIdx];
 
 		// Process decision
-		if (decision instanceof Prendre) {
-			playerHand.add(((Prendre) decision).getCarte());
-		}
-		else if (decision instanceof Triplette) {
-			Carte cards[] = ((Triplette) decision).getCartes();
-			
-			for (int i=0; i<cards.length; i++) {
-				playerHand.remove(cards[i]);
-			}
-			
-			gui.displayTriplette(cards);
-		}
-		else if (decision instanceof Gala) {
-			// FIN !
-		}
+		this.updatePlayerHand(decision);
 		
 		return decision;
 	}
@@ -60,6 +46,25 @@ public class Joueur implements moteur.Joueur {
 	
 	public void setAction(int pDecisionIdx) {
 		this.decisionIdx = pDecisionIdx;
+	}
+	
+	protected void updatePlayerHand(Coup coup) {
+		
+		// Prendre une carte
+		if (coup instanceof Prendre) {
+			playerHand.add(((Prendre) coup).getCarte());
+		}
+		
+		// Annoncer une Triplette
+		else if (coup instanceof Triplette) {
+			Carte cards[] = ((Triplette) coup).getCartes();
+			
+			for (int i=0; i<cards.length; i++) {
+				playerHand.remove(cards[i]);
+			}
+			
+			gui.displayTriplette(cards);
+		}
 	}
 
 }
