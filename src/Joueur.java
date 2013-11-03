@@ -5,17 +5,15 @@ import moteur.*;
 public class Joueur implements moteur.Joueur {
 
 	protected static GUI gui;
-	private static int playerCnt = 0;
 	
 	protected int playerId;
 	protected ArrayList<Carte> playerHand = new ArrayList<Carte>();
 	private int decisionIdx;
 
 	
-	public Joueur(GUI pGui){
+	public Joueur(SauveQuiPuce moteur, Integer num, GUI pGui){
 		gui = pGui;
-		this.playerId = playerCnt;
-		playerCnt++;
+		this.playerId = num;
 	}
 
 

@@ -4,16 +4,17 @@ import moteur.*;
 
 public class IA extends Joueur {
 		
-	public IA(GUI pGui) {
-		super(pGui);
+	public IA(SauveQuiPuce moteur, Integer num, GUI pGui) {
+		super(moteur, num, pGui);
 	}
+	
 
 	public Coup prochainCoup(Coup[] coupsPossibles){
 		gui.playerTracking(this.playerId);
 		Coup tmp=null;
 		
-		try { Thread.currentThread().sleep(1000); }
-		catch (InterruptedException e) { e.printStackTrace(); }
+		//try { Thread.currentThread().sleep(1000); }
+		//catch (InterruptedException e) { e.printStackTrace(); }
 		
 		// Cas trivial
 		if (coupsPossibles.length == 1) {
@@ -72,7 +73,7 @@ public class IA extends Joueur {
 	// Verifie si future Triplette possible
 	private Coup possibleTriplette(Coup[] coupsPossibles){
 		  
-		  Carte[] rangee =this.gui.getGame().getCartesRetournees();
+		  Carte[] rangee = gui.getGame().getCartesRetournees();
 		  
 		  // parcours de la main du joueur
 		  for( int i=0; i<this.playerHand.size(); i++){
